@@ -6,9 +6,10 @@ refatoramos o projeto mudando-o para typescript.
 <img src="screencapture.png" alt="Imagem do Organo" width="50%">
 
 ## ✔️ Técnicas e tecnologias utilizadas
-- `React`
-- `React Hooks`
-- `TypeScript`
+
+<img src="https://img.shields.io/badge/-React-%230077B5?style=for-the-badge&logo=react&logoColor=white" target="_blank"></a>
+<br>
+<img src="https://img.shields.io/badge/-TypeScript-%230077B5?style=for-the-badge&logo=typescript&logoColor=white" target="_blank"></a>
 
 ## 🛠️ Abrir e rodar o projeto
 
