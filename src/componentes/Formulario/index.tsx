@@ -1,35 +1,44 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import CampoTexto from '../CampoTexto'
 import './Formulario.css'
 import React from 'react'
 import ListaSuspensa from '../ListaSuspensa'
 import Botao from '../Botao'
 import { IColaborador } from '../../compartilhado/interfaces/IColaborador'
+import CampoAnexo from '../CampoAnexo'
 
 interface FormularioProps {
     aoColaboradorCadastrado: (colaborador: IColaborador) => void
-    times: string[]
+    times: string[];
 }
 
 const Formulario = (props: FormularioProps) => {
+    const [nome, setNome] = useState('');
+    const [cargo, setCargo] = useState('');
+    const [imagem, setImagem] = useState<File | null>(null);
+    const [time, setTime] = useState('');
 
-    const [nome, setNome] = useState('')
-    const [cargo, setCargo] = useState('')
-    const [imagem, setImagem] = useState('')
-    const [time, setTime] = useState('')
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const aoSalvar = (evento: React.FormEvent<HTMLFormElement> ) => {
         evento.preventDefault()
+
+        const imagemURL = imagem ? URL.createObjectURL(imagem) : ''
+
         props.aoColaboradorCadastrado({
             nome,
             cargo,
-            imagem,
+            imagem: imagemURL,
             time
         })
         setNome('')
         setCargo('')
-        setImagem('')
+        setImagem(null)
         setTime('')
+
+        if(fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
     }
 
     return (
@@ -50,12 +59,9 @@ const Formulario = (props: FormularioProps) => {
                     valor={cargo}
                     aoAlterado={valor => setCargo(valor)}
                 />
-                <CampoTexto
-                    label="Imagem"
-                    placeholder="Digite o endereço da imagem" 
-                    valor={imagem}
-                    aoAlterado={valor => setImagem(valor)}
-                />
+
+                <CampoAnexo aoImagemSelecionada={setImagem} ref={fileInputRef}/>
+                
                 <ListaSuspensa
                     obrigatorio={true}
                     label="Time" 
